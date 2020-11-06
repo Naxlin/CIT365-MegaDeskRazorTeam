@@ -39,7 +39,7 @@ namespace MegaDeskRazor.Pages.DeskQuotes
             Desk = await _context.Desk.FirstOrDefaultAsync(m => m.DeskId == this.DeskQuote.DeskId);
             DesktopMaterial = await _context.DesktopMaterial.FirstOrDefaultAsync(m => m.DesktopMaterialId == this.Desk.DesktopMaterialId);
             Delivery = await _context.Delivery.FirstOrDefaultAsync(m => m.DeliveryId == this.DeskQuote.DeliveryId);
-
+            
             if (DeskQuote == null)
             {
                 return NotFound();
@@ -55,12 +55,18 @@ namespace MegaDeskRazor.Pages.DeskQuotes
             }
 
             DeskQuote = await _context.DeskQuote.FindAsync(id);
+            Desk = await _context.Desk.FindAsync(DeskQuote.DeskId);
 
+            if (Desk != null)
+            {
+                _context.Desk.Remove(Desk);
+            }
+            
             if (DeskQuote != null)
             {
                 _context.DeskQuote.Remove(DeskQuote);
-                await _context.SaveChangesAsync();
             }
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

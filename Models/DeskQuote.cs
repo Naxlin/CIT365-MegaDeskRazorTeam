@@ -14,6 +14,7 @@ namespace MegaDeskRazor.Models
         [Display(Name = "Quote Date")]
         public DateTime QuoteDate { get; set; }
         [Display(Name = "Quote Price")]
+        [DisplayFormat(DataFormatString="{0:C}")]
         public decimal QuotePrice { get; set; }
         public int DeliveryId { get; set; }
         public int DeskId { get; set; }
@@ -25,7 +26,7 @@ namespace MegaDeskRazor.Models
         public decimal getQuotePrice(MegaDeskRazor.Data.MegaDeskContext context) 
         { 
             decimal totalPrice = 200.00M;
-            /*decimal desktopMaterialPrice = 0.00M;
+            decimal desktopMaterialPrice = 0.00M;
             var desktopMaterialPrices = context.DesktopMaterial.Where(d => d.DesktopMaterialId == this.Desk.DesktopMaterialId).FirstOrDefault();
             desktopMaterialPrice = desktopMaterialPrices.Cost;
 
@@ -35,7 +36,7 @@ namespace MegaDeskRazor.Models
             if (surfaceArea > 1000)
                 totalPrice += surfaceArea - 1000;
 
-            var rushPriceRow = context.Delivery.Where(d => d.DeliveryId == this.Delivery.DeliveryId).FirstOrDefault();
+            var rushPriceRow = context.Delivery.Where(d => d.DeliveryId == this.DeliveryId).FirstOrDefault();
             if (surfaceArea < 1000)
                 rushPrice = rushPriceRow.ShippingUnder1000;
             else if (surfaceArea <= 2000)
@@ -43,8 +44,8 @@ namespace MegaDeskRazor.Models
             else if (surfaceArea > 2000)
                 rushPrice = rushPriceRow.ShippingOver2000;
 
-            totalPrice +=  rushPrice + (this.Desk.DrawerPrice * this.Desk.NumberOfDrawers);
-*/
+            totalPrice += desktopMaterialPrice + rushPrice + (this.Desk.DrawerPrice * this.Desk.NumberOfDrawers);
+
             return totalPrice; 
         }
     }

@@ -24,11 +24,11 @@ namespace MegaDeskRazor.Pages.DeskQuotes
         public DeskQuote DeskQuote { get; set; }
         [BindProperty]
         public Desk Desk { get; set; }
-        [BindProperty]
-        public DesktopMaterial DesktopMaterial { get; set; }
+        // [BindProperty]
+        // public DesktopMaterial DesktopMaterial { get; set; }
 
-        [BindProperty]
-        public Delivery Delivery { get; set; }
+        // [BindProperty]
+        // public Delivery Delivery { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -43,8 +43,8 @@ namespace MegaDeskRazor.Pages.DeskQuotes
                 .Include(d => d.Desk).FirstOrDefaultAsync(m => m.DeskQuoteId == id);
 
             Desk = await _context.Desk.FirstOrDefaultAsync(m => m.DeskId == this.DeskQuote.DeskId);
-            DesktopMaterial = await _context.DesktopMaterial.FirstOrDefaultAsync(m => m.DesktopMaterialId == this.Desk.DesktopMaterialId);
-            Delivery = await _context.Delivery.FirstOrDefaultAsync(m => m.DeliveryId == this.DeskQuote.DeliveryId);
+            // DesktopMaterial = await _context.DesktopMaterial.FirstOrDefaultAsync(m => m.DesktopMaterialId == this.Desk.DesktopMaterialId);
+            // Delivery = await _context.Delivery.FirstOrDefaultAsync(m => m.DeliveryId == this.DeskQuote.DeliveryId);
 
             if (DeskQuote == null)
             {
@@ -64,7 +64,27 @@ namespace MegaDeskRazor.Pages.DeskQuotes
                 return Page();
             }
 
+            _context.Attach(Desk).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // if (!DeskQuoteExists(DeskQuote.DeskQuoteId))
+                // {
+                //     return NotFound();
+                // }
+                // else
+                // {
+                //     throw;
+                // }
+            }
+
             _context.Attach(DeskQuote).State = EntityState.Modified;
+
+            DeskQuote.QuotePrice = DeskQuote.getQuotePrice(_context);
 
             try
             {

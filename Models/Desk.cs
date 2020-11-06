@@ -3,16 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MegaDeskRazor.Models
 {
-
-    /*public enum DeskTopMaterial
-    {
-        Oak,
-        Laminate,
-        Pine,
-        Rosewood,
-        Veneer,
-    }*/
-
     public class Desk
     {
         public Desk() 
@@ -36,6 +26,7 @@ namespace MegaDeskRazor.Models
 
         public int DesktopMaterialId { get; set; }
 
+        // Navigation property:
         public DesktopMaterial DesktopMaterial { get; set; }
     }
 }

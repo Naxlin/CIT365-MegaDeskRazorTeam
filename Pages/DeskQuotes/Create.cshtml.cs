@@ -47,13 +47,12 @@ namespace MegaDeskRazor.Pages.DeskQuotes
                 return Page();
             }
 
-            Desk.DesktopMaterialId = DesktopMaterial.DesktopMaterialId;
             _context.Desk.Add(Desk);
 
             await _context.SaveChangesAsync();
 
             DeskQuote.DeskId = Desk.DeskId;
-            DeskQuote.DeliveryId = Delivery.DeliveryId;
+            DeskQuote.Desk = Desk;
             DeskQuote.QuoteDate = DateTime.Now;
             DeskQuote.QuotePrice = DeskQuote.getQuotePrice(_context);
             _context.DeskQuote.Add(DeskQuote);
