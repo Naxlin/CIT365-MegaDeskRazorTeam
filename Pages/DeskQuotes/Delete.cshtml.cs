@@ -21,6 +21,9 @@ namespace MegaDeskRazor.Pages.DeskQuotes
 
         [BindProperty]
         public DeskQuote DeskQuote { get; set; }
+        public Desk Desk { get; set; }
+        public Delivery Delivery { get; set; }
+        public DesktopMaterial DesktopMaterial { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,6 +35,10 @@ namespace MegaDeskRazor.Pages.DeskQuotes
             DeskQuote = await _context.DeskQuote
                 .Include(d => d.Delivery)
                 .Include(d => d.Desk).FirstOrDefaultAsync(m => m.DeskQuoteId == id);
+
+            Desk = await _context.Desk.FirstOrDefaultAsync(m => m.DeskId == this.DeskQuote.DeskId);
+            DesktopMaterial = await _context.DesktopMaterial.FirstOrDefaultAsync(m => m.DesktopMaterialId == this.Desk.DesktopMaterialId);
+            Delivery = await _context.Delivery.FirstOrDefaultAsync(m => m.DeliveryId == this.DeskQuote.DeliveryId);
 
             if (DeskQuote == null)
             {

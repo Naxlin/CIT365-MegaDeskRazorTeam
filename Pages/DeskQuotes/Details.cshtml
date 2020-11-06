@@ -30,16 +30,34 @@
             @Html.DisplayFor(model => model.DeskQuote.QuotePrice)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DeskQuote.Delivery)
+            @Html.DisplayNameFor(model => model.Delivery.ShippingName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DeskQuote.Delivery.DeliveryId)
+            @Html.DisplayFor(model => model.Delivery.ShippingName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DeskQuote.Desk)
+            @Html.DisplayNameFor(model => model.Desk.Depth)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DeskQuote.Desk.DeskId)
+            @Html.DisplayFor(model => model.Desk.Depth)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Desk.Width)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Desk.Width)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Desk.NumberOfDrawers)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Desk.NumberOfDrawers)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DesktopMaterial.DesktopMaterialName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DesktopMaterial.DesktopMaterialName)
         </dd>
     </dl>
 </div>

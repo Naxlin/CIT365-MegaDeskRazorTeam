@@ -22,6 +22,13 @@ namespace MegaDeskRazor.Pages.DeskQuotes
 
         [BindProperty]
         public DeskQuote DeskQuote { get; set; }
+        [BindProperty]
+        public Desk Desk { get; set; }
+        [BindProperty]
+        public DesktopMaterial DesktopMaterial { get; set; }
+
+        [BindProperty]
+        public Delivery Delivery { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,16 +37,21 @@ namespace MegaDeskRazor.Pages.DeskQuotes
                 return NotFound();
             }
 
+
             DeskQuote = await _context.DeskQuote
                 .Include(d => d.Delivery)
                 .Include(d => d.Desk).FirstOrDefaultAsync(m => m.DeskQuoteId == id);
+
+            Desk = await _context.Desk.FirstOrDefaultAsync(m => m.DeskId == this.DeskQuote.DeskId);
+            DesktopMaterial = await _context.DesktopMaterial.FirstOrDefaultAsync(m => m.DesktopMaterialId == this.Desk.DesktopMaterialId);
+            Delivery = await _context.Delivery.FirstOrDefaultAsync(m => m.DeliveryId == this.DeskQuote.DeliveryId);
 
             if (DeskQuote == null)
             {
                 return NotFound();
             }
-           ViewData["DeliveryId"] = new SelectList(_context.Delivery, "DeliveryId", "DeliveryId");
-           ViewData["DeskId"] = new SelectList(_context.Desk, "DeskId", "DeskId");
+            ViewData["DeliveryId"] = new SelectList(_context.Delivery, "DeliveryId", "ShippingName");
+            ViewData["DesktopMaterialId"] = new SelectList(_context.DesktopMaterial, "DesktopMaterialId", "DesktopMaterialName");
             return Page();
         }
 

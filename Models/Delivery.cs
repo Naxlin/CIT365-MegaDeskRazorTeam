@@ -3,20 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MegaDeskRazor.Models
 {
-
-    /*public enum DeliveryDay
-    {
-        Rush3Days,
-        Rush5Days,
-        Rush7Days,
-        Normal14Days,
-    }*/
-
-
     public class Delivery
     {
         public int DeliveryId { get; set; }
 
+        [Display(Name = "Shipping")]
         public string ShippingName { get; set; }
 
         public decimal ShippingUnder1000 { get; set; }

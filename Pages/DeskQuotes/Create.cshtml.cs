@@ -21,8 +21,8 @@ namespace MegaDeskRazor.Pages.DeskQuotes
 
         public IActionResult OnGet()
         {
-        ViewData["DeliveryId"] = new SelectList(_context.Delivery, "DeliveryId", "ShippingName");
-        ViewData["DesktopMaterialId"] = new SelectList(_context.DesktopMaterial, "DesktopMaterialId", "DesktopMaterialName");
+            ViewData["DeliveryId"] = new SelectList(_context.Delivery, "DeliveryId", "ShippingName");
+            ViewData["DesktopMaterialId"] = new SelectList(_context.DesktopMaterial, "DesktopMaterialId", "DesktopMaterialName");
             return Page();
         }
 
@@ -47,7 +47,17 @@ namespace MegaDeskRazor.Pages.DeskQuotes
                 return Page();
             }
 
+            Desk.DesktopMaterialId = DesktopMaterial.DesktopMaterialId;
+            _context.Desk.Add(Desk);
+
+            await _context.SaveChangesAsync();
+
+            DeskQuote.DeskId = Desk.DeskId;
+            DeskQuote.DeliveryId = Delivery.DeliveryId;
+            DeskQuote.QuoteDate = DateTime.Now;
+            DeskQuote.QuotePrice = DeskQuote.getQuotePrice(_context);
             _context.DeskQuote.Add(DeskQuote);
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
